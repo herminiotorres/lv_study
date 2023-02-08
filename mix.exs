@@ -73,7 +73,8 @@ defmodule LvStudy.MixProject do
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": [
         "tailwind.install --if-missing",
-        "esbuild.install --if-missing"
+        "esbuild.install --if-missing",
+        "sass.install --if-missing"
       ],
       "assets.build": [
         "esbuild default",

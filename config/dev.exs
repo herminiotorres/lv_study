@@ -26,7 +26,8 @@ config :lv_study, LvStudyWeb.Endpoint,
   secret_key_base: "843IYtY7EGZ+tVmQpGO33S2m1YWiHZWGUMG+JLS0MWMS90pwIaLe4Ed93DaBkmpp",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]},
+    sass: {DartSass, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -56,9 +57,15 @@ config :lv_study, LvStudyWeb.Endpoint,
 config :lv_study, LvStudyWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/(?!uploads).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/lv_study_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/lv_study_web/(controllers|views|live|components)/.*(ex)$",
+      ~r"lib/lv_study_web/templates/.*(eex)$"
+    ],
+    notify: [
+      live_view: [
+        ~r"lib/lv_study_web/(live|components)/.*(eex)$"
+      ]
     ]
   ]
 

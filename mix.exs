@@ -50,7 +50,12 @@ defmodule LvStudy.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.21.0"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:bcrypt_elixir, "~> 3.0"},
+      {:faker, "~> 0.17.0"},
+      {:number, "~> 1.0"},
+      {:timex, "~> 3.7"},
+      {:dart_sass, "~> 0.5.1", runtime: Mix.env() == :dev}
     ]
   end
 
@@ -62,12 +67,25 @@ defmodule LvStudy.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "assets.setup"],
+      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+      "assets.setup": [
+        "tailwind.install --if-missing",
+        "esbuild.install --if-missing"
+      ],
+      "assets.build": [
+        "esbuild default",
+        "sass default",
+        "tailwind default"
+      ],
+      "assets.deploy": [
+        "tailwind default --minify",
+        "sass default",
+        "esbuild default --minify",
+        "phx.digest"
+      ]
     ]
   end
 end

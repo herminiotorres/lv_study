@@ -53,7 +53,11 @@ defmodule LvStudyWeb.CoreComponents do
       phx-remove={hide_modal(@id)}
       class="relative z-50 hidden"
     >
-      <div id={"#{@id}-bg"} class="fixed inset-0 bg-zinc-50/90 transition-opacity" aria-hidden="true" />
+      <div
+        id={"#{@id}-bg"}
+        class="fixed inset-0 bg-zinc-50/90 transition-opacity"
+        aria-hidden="true"
+      />
       <div
         class="fixed inset-0 overflow-y-auto"
         aria-labelledby={"#{@id}-title"}
@@ -84,7 +88,10 @@ defmodule LvStudyWeb.CoreComponents do
               </div>
               <div id={"#{@id}-content"}>
                 <header :if={@title != []}>
-                  <h1 id={"#{@id}-title"} class="text-lg font-semibold leading-8 text-zinc-800">
+                  <h1
+                    id={"#{@id}-title"}
+                    class="text-lg font-semibold leading-8 text-zinc-800"
+                  >
                     <%= render_slot(@title) %>
                   </h1>
                   <p
@@ -96,7 +103,10 @@ defmodule LvStudyWeb.CoreComponents do
                   </p>
                 </header>
                 <%= render_slot(@inner_block) %>
-                <div :if={@confirm != [] or @cancel != []} class="ml-6 mb-4 flex items-center gap-5">
+                <div
+                  :if={@confirm != [] or @cancel != []}
+                  class="ml-6 mb-4 flex items-center gap-5"
+                >
                   <.button
                     :for={confirm <- @confirm}
                     id={"#{@id}-confirm"}
@@ -144,21 +154,38 @@ defmodule LvStudyWeb.CoreComponents do
   def flash(assigns) do
     ~H"""
     <div
-      :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)}
+      :if={
+        msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)
+      }
       id={@id}
       phx-mounted={@autoshow && show("##{@id}")}
-      phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
+      phx-click={
+        JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")
+      }
       role="alert"
       class={[
         "fixed hidden top-2 right-2 w-80 sm:w-96 z-50 rounded-lg p-3 shadow-md shadow-zinc-900/5 ring-1",
-        @kind == :info && "bg-emerald-50 text-emerald-800 ring-emerald-500 fill-cyan-900",
-        @kind == :error && "bg-rose-50 p-3 text-rose-900 shadow-md ring-rose-500 fill-rose-900"
+        @kind == :info &&
+          "bg-emerald-50 text-emerald-800 ring-emerald-500 fill-cyan-900",
+        @kind == :error &&
+          "bg-rose-50 p-3 text-rose-900 shadow-md ring-rose-500 fill-rose-900"
       ]}
       {@rest}
     >
-      <p :if={@title} class="flex items-center gap-1.5 text-[0.8125rem] font-semibold leading-6">
-        <Heroicons.information_circle :if={@kind == :info} mini class="h-4 w-4" />
-        <Heroicons.exclamation_circle :if={@kind == :error} mini class="h-4 w-4" />
+      <p
+        :if={@title}
+        class="flex items-center gap-1.5 text-[0.8125rem] font-semibold leading-6"
+      >
+        <Heroicons.information_circle
+          :if={@kind == :info}
+          mini
+          class="h-4 w-4"
+        />
+        <Heroicons.exclamation_circle
+          :if={@kind == :error}
+          mini
+          class="h-4 w-4"
+        />
         <%= @title %>
       </p>
       <p class="mt-2 text-[0.8125rem] leading-5"><%= msg %></p>
@@ -168,7 +195,10 @@ defmodule LvStudyWeb.CoreComponents do
         class="group absolute top-2 right-1 p-2"
         aria-label={gettext("close")}
       >
-        <Heroicons.x_mark solid class="h-5 w-5 stroke-current opacity-40 group-hover:opacity-70" />
+        <Heroicons.x_mark
+          solid
+          class="h-5 w-5 stroke-current opacity-40 group-hover:opacity-70"
+        />
       </button>
     </div>
     """
@@ -202,7 +232,10 @@ defmodule LvStudyWeb.CoreComponents do
     <.form :let={f} for={@for} as={@as} {@rest}>
       <div class="space-y-8 bg-white mt-10">
         <%= render_slot(@inner_block, f) %>
-        <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
+        <div
+          :for={action <- @actions}
+          class="mt-2 flex items-center justify-between gap-6"
+        >
           <%= render_slot(action, f) %>
         </div>
       </div>
@@ -289,7 +322,10 @@ defmodule LvStudyWeb.CoreComponents do
     assigns = assign_new(assigns, :checked, fn -> input_equals?(assigns.value, "true") end)
 
     ~H"""
-    <label phx-feedback-for={@name} class="flex items-center gap-4 text-sm leading-6 text-zinc-600">
+    <label
+      phx-feedback-for={@name}
+      class="flex items-center gap-4 text-sm leading-6 text-zinc-600"
+    >
       <input type="hidden" name={@name} value="false" />
       <input
         type="checkbox"
@@ -381,7 +417,10 @@ defmodule LvStudyWeb.CoreComponents do
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-800">
+    <label
+      for={@for}
+      class="block text-sm font-semibold leading-6 text-zinc-800"
+    >
       <%= render_slot(@inner_block) %>
     </label>
     """
@@ -395,7 +434,10 @@ defmodule LvStudyWeb.CoreComponents do
   def error(assigns) do
     ~H"""
     <p class="phx-no-feedback:hidden mt-3 flex gap-3 text-sm leading-6 text-rose-600">
-      <Heroicons.exclamation_circle mini class="mt-0.5 h-5 w-5 flex-none fill-rose-500" />
+      <Heroicons.exclamation_circle
+        mini
+        class="mt-0.5 h-5 w-5 flex-none fill-rose-500"
+      />
       <%= render_slot(@inner_block) %>
     </p>
     """
@@ -412,12 +454,18 @@ defmodule LvStudyWeb.CoreComponents do
 
   def header(assigns) do
     ~H"""
-    <header class={[@actions != [] && "flex items-center justify-between gap-6", @class]}>
+    <header class={[
+      @actions != [] && "flex items-center justify-between gap-6",
+      @class
+    ]}>
       <div>
         <h1 class="text-lg font-semibold leading-8 text-zinc-800">
           <%= render_slot(@inner_block) %>
         </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
+        <p
+          :if={@subtitle != []}
+          class="mt-2 text-sm leading-6 text-zinc-600"
+        >
           <%= render_slot(@subtitle) %>
         </p>
       </div>
@@ -452,8 +500,12 @@ defmodule LvStudyWeb.CoreComponents do
       <table class="mt-11 w-[40rem] sm:w-full">
         <thead class="text-left text-[0.8125rem] leading-6 text-zinc-500">
           <tr>
-            <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal"><%= col[:label] %></th>
-            <th class="relative p-0 pb-4"><span class="sr-only"><%= gettext("Actions") %></span></th>
+            <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal">
+              <%= col[:label] %>
+            </th>
+            <th class="relative p-0 pb-4">
+              <span class="sr-only"><%= gettext("Actions") %></span>
+            </th>
           </tr>
         </thead>
         <tbody class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700">
@@ -472,7 +524,10 @@ defmodule LvStudyWeb.CoreComponents do
                 <span class="absolute h-full w-4 top-0 -right-4 group-hover:bg-zinc-50 sm:rounded-r-xl" />
               </div>
               <div class="block py-4 pr-6">
-                <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
+                <span class={[
+                  "relative",
+                  i == 0 && "font-semibold text-zinc-900"
+                ]}>
                   <%= render_slot(col, row) %>
                 </span>
               </div>
@@ -513,8 +568,12 @@ defmodule LvStudyWeb.CoreComponents do
     <div class="mt-14">
       <dl class="-my-4 divide-y divide-zinc-100">
         <div :for={item <- @item} class="flex gap-4 py-4 sm:gap-8">
-          <dt class="w-1/4 flex-none text-[0.8125rem] leading-6 text-zinc-500"><%= item.title %></dt>
-          <dd class="text-sm leading-6 text-zinc-700"><%= render_slot(item) %></dd>
+          <dt class="w-1/4 flex-none text-[0.8125rem] leading-6 text-zinc-500">
+            <%= item.title %>
+          </dt>
+          <dd class="text-sm leading-6 text-zinc-700">
+            <%= render_slot(item) %>
+          </dd>
         </div>
       </dl>
     </div>

@@ -14,6 +14,9 @@ module.exports = {
       colors: {
         brand: '#FD4F00',
       },
+      fontFamily: {
+        secret: ['TopSecret'],
+      },
     },
   },
   plugins: [

@@ -2,7 +2,11 @@ defmodule LvStudyWeb.LightLive do
   use LvStudyWeb, :live_view
 
   def mount(_params, _session, socket) do
-    socket = assign(socket, brightness: 10)
+    socket =
+      assign(socket,
+        brightness: 10,
+        temp: "3000"
+      )
 
     {:ok, socket}
   end
@@ -12,7 +16,7 @@ defmodule LvStudyWeb.LightLive do
     <h1>Front Proch Light</h1>
     <div id="light">
       <div class="meter">
-        <span style={"width: #{@brightness}%"}>
+        <span style={"width: #{@brightness}%; background: #{temp_color(@temp)}"}>
           <%= @brightness %>%
         </span>
       </div>
@@ -31,16 +35,32 @@ defmodule LvStudyWeb.LightLive do
       <button phx-click="on">
         <img src="/images/light-on.svg" alt="light on" />
       </button>
+      <form phx-change="update">
+        <input
+          type="range"
+          min="0"
+          max="100"
+          name="brightness"
+          value={@brightness}
+        />
+      </form>
+      <form phx-change="change-temp">
+        <div class="temps">
+          <%= for temp <- ["3000", "4000", "5000"] do %>
+            <div>
+              <input
+                type="radio"
+                id={temp}
+                name="temp"
+                value={temp}
+                checked={temp == @temp}
+              />
+              <label for={temp}><%= temp %></label>
+            </div>
+          <% end %>
+        </div>
+      </form>
     </div>
-    <form phx-change="update">
-      <input
-        type="range"
-        min="0"
-        max="100"
-        name="brightness"
-        value={@brightness}
-      />
-    </form>
     """
   end
 
@@ -79,4 +99,14 @@ defmodule LvStudyWeb.LightLive do
 
     {:noreply, socket}
   end
+
+  def handle_event("change-temp", %{"temp" => temp}, socket) do
+    socket = assign(socket, :temp, temp)
+
+    {:noreply, socket}
+  end
+
+  defp temp_color("3000"), do: "#F1C40D"
+  defp temp_color("4000"), do: "#FEFF66"
+  defp temp_color("5000"), do: "#99CCFF"
 end

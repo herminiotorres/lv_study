@@ -21,6 +21,8 @@ defmodule LvStudyWeb.Router do
 
     live "/light", LightLive
     live "/sandbox", SandboxLive
+    live "/sales", SalesLive
+    live "/bingo", BingoLive
   end
 
   # Other scopes may use custom stacks.

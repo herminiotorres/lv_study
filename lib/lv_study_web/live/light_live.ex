@@ -22,6 +22,9 @@ defmodule LvStudyWeb.LightLive do
       <button phx-click="down">
         <img src="/images/down.svg" alt="decrement light by 10" />
       </button>
+      <button phx-click="random">
+        <img src="/images/fire.svg" alt="choose a random light number" />
+      </button>
       <button phx-click="up">
         <img src="/images/up.svg" alt="increment light by 10" />
       </button>
@@ -34,21 +37,31 @@ defmodule LvStudyWeb.LightLive do
 
   def handle_event("on", _params, socket) do
     socket = assign(socket, brightness: 100)
+
     {:noreply, socket}
   end
 
   def handle_event("up", _params, socket) do
-    socket = update(socket, :brightness, &(&1 + 10))
+    socket = update(socket, :brightness, &min(&1 + 10, 100))
+
     {:noreply, socket}
   end
 
   def handle_event("down", _params, socket) do
-    socket = update(socket, :brightness, &(&1 - 10))
+    socket = update(socket, :brightness, &max(&1 - 10, 0))
+
     {:noreply, socket}
   end
 
   def handle_event("off", _params, socket) do
     socket = assign(socket, brightness: 0)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("random", _params, socket) do
+    socket = assign(socket, :brightness, Enum.random(0..100))
+
     {:noreply, socket}
   end
 end

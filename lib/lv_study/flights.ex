@@ -4,11 +4,10 @@ defmodule LvStudy.Flights do
 
     airport = String.upcase(airport)
 
-    list_flights()
-    |> Enum.filter(
-      &(&1.origin == airport ||
-          &1.destination == airport)
-    )
+    Enum.filter(list_flights(), fn flight ->
+      String.starts_with?(flight.origin, airport) ||
+        String.starts_with?(flight.destination, airport)
+    end)
   end
 
   def list_flights do

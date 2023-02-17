@@ -25,6 +25,7 @@ defmodule LvStudyWeb.Router do
     live "/bingo", BingoLive
     live "/flights", FlightsLive
     live "/vehicles", VehiclesLive
+    live "/boats", BoatsLive
   end
 
   # Other scopes may use custom stacks.

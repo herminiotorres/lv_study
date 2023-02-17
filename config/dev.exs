@@ -59,12 +59,11 @@ config :lv_study, LvStudyWeb.Endpoint,
     patterns: [
       ~r"priv/static/(?!uploads).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/lv_study_web/(controllers|views|live|components)/.*(ex)$",
-      ~r"lib/lv_study_web/templates/.*(eex)$"
+      ~r"lib/lv_study_web/(controllers|live|components)/.*(ex)$"
     ],
     notify: [
       live_view: [
-        ~r"lib/lv_study_web/(live|components)/.*(eex)$"
+        ~r"lib/lv_study_web/(live|components)/.*(heex)$"
       ]
     ]
   ]
